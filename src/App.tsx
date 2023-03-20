@@ -5,13 +5,22 @@ import useDebounce from './hooks/useDebounce';
 
 function App() {
   const [scrollPosition, setscrollPosition] = useState(0);
+  const [progress, setProgress] = useState(0);
   const [text, setText] = useState('');
   const debouncedText = useDebounce(text, 1000);
 
   // 방법 1: lodash.throttle 사용
   const handleScroll = throttle(() => {
     console.log('handling scroll');
-    setscrollPosition(Math.round(window.scrollY));
+    setscrollPosition(Math.round(document.documentElement.scrollTop));
+
+    const result =
+      (document.documentElement.scrollTop /
+        (document.documentElement.scrollHeight -
+          document.documentElement.clientHeight)) *
+      100;
+
+    setProgress(result);
   }, 100);
 
   // 방법 2: custom hook 사용
@@ -37,8 +46,9 @@ function App() {
           position: 'fixed',
           left: 0,
           top: 0,
-          backgroundColor: 'royalblue',
-          width: `${scrollPosition / 38}%`,
+          zIndex: 50,
+          background: 'linear-gradient(to right, #ff5f6d, #ffc371)',
+          width: `${progress}%`,
           transition: 'width 0.2s ease-out',
         }}
       ></div>
