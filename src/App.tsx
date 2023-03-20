@@ -62,7 +62,10 @@ function App() {
 
       <div
         style={{
-          marginTop: '300px',
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
         }}
       >
         <input
@@ -76,7 +79,17 @@ function App() {
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <p>Debounced Value: {debouncedText}</p>
+        <p>
+          Debounced Value :{' '}
+          <span
+            style={{
+              color: 'royalblue',
+              fontWeight: 'bold',
+            }}
+          >
+            {debouncedText}
+          </span>
+        </p>
       </div>
     </div>
   );
